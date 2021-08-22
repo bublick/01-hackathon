@@ -1,11 +1,12 @@
-import {Module} from '../core/module'
+import {Module} from '../core/module';
+import { preparePlayground } from '../utils';
 
 export class ClicksModule extends Module {
     #counter
     #doubleCounter
     #timer
     #isActivated
-    constructor(type = 'clicksModule', text = 'считать клики (за 5 сек.)', timer=5000) {
+    constructor(type = 'clicksModule', text = 'Считать клики (за 5 сек.)', timer=5000) {
         super(type,text);
         this.#counter = this.#doubleCounter = 0;
         this.#timer = timer;
@@ -15,10 +16,10 @@ export class ClicksModule extends Module {
     #init(){
         console.log('инициализация модуля подсчета кликов')
         document.addEventListener('click', ()=>{
-            if(this.#isActivated) this.#counter++
+            if(this.#isActivated) this.#counter++ ;
         })
         document.addEventListener('dblclick', ()=>{
-            if(this.#isActivated) this.#doubleCounter++
+            if(this.#isActivated) this.#doubleCounter++ ;
         })
     }
     trigger() {
@@ -43,7 +44,8 @@ export class ClicksModule extends Module {
 
     }
     #getH1(){
-        document.querySelector('h1') ? document.querySelector('h1').innerText = '' : document.body.append(document.createElement('h1'))
+        const playground = preparePlayground()
+        document.querySelector('h1') ? document.querySelector('h1').innerText = '' : playground.append(document.createElement('h1'))
         return document.querySelector('h1')
     }
 
