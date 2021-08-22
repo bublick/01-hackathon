@@ -1,4 +1,5 @@
 import {Module} from '../core/module'
+import { getRandom, preparePlayground, getRandomColor as getRandColor } from '../utils';
 
 export class ShapeModule extends Module {
     #stackable
@@ -12,16 +13,14 @@ export class ShapeModule extends Module {
     trigger() {
         console.log('trigger модуля спауна фигур сработал');
         if(!this.#$canvas) this.#setCanvas()
-        const getRandColor = ()=>{
-            return "rgb("+[
-                Math.round(Math.random()*0xFF),
-                Math.round(Math.random()*0xFF),
-                Math.round(Math.random()*0xFF)
-            ].join()+")";
-        }
-        const getRandom = (min, max)=>{
-            return Math.floor(Math.random() * (max - min) + min)
-        }
+        // const getRandColor = ()=>{
+        //     return "rgb("+[
+        //         Math.round(Math.random()*0xFF),
+        //         Math.round(Math.random()*0xFF),
+        //         Math.round(Math.random()*0xFF)
+        //     ].join()+")";
+        // }
+        
         if(this.#$canvas && this.#$canvas.getContext) {
             if(!this.#stackable) this.#clearCanvas()
             let maxFigureWidthHeight = window.innerWidth*0.35;
@@ -102,7 +101,8 @@ export class ShapeModule extends Module {
 
     #setCanvas(){
         console.log('setCanvas() модуля спауна фигур');
-        document.body.append(document.createElement('canvas'))
+        const playground = preparePlayground()
+        playground.append(document.createElement('canvas'))
         this.#$canvas = document.querySelector('canvas')
         this.#$canvas.width = window.innerWidth;
         this.#$canvas.height = window.innerHeight;
