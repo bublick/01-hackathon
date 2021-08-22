@@ -1,4 +1,5 @@
 import {Module} from '../core/module'
+import { preparePlayground } from '../utils';
 
 export class RandomGifModule extends Module {
     constructor(type = 'randomGifModule', text = 'Случайная гифка', stackable = false) {
@@ -17,8 +18,8 @@ export class RandomGifModule extends Module {
         }
     }
 
-    async #getGif(holderStr) {
-        const loaderNode = document.querySelector(holderStr)
+    async #getGif(holderNode) {
+        const loaderNode = holderNode
         this.#toggleLoader(loaderNode)
         const giphy  = {
             baseURL: "https://api.giphy.com/v1/gifs/",
@@ -52,21 +53,10 @@ export class RandomGifModule extends Module {
     }
 
     async #renderMessage(){
-        if ( document.querySelector('.gif-wrapper') ){
-            const gifWrapper = document.querySelector('.gif-wrapper')
-            gifWrapper.innerHTML = ''
-        } else {
-            const gifWrapper = document.createElement('div')
-            gifWrapper.style.bottom = '0px'
-            gifWrapper.style.left = '0px'
-            gifWrapper.className = 'gif-wrapper'
-            document.body.append( gifWrapper )
-        }
-
-        const gifWrapper = document.querySelector('.gif-wrapper')
+        const playground = preparePlayground()
         const gif = document.createElement('img')
-        gif.src = await this.#getGif('.gif-wrapper')
-        gifWrapper.append( gif )
+        gif.src = await this.#getGif(playground)
+        playground.append( gif )
     }
 
     trigger() {
