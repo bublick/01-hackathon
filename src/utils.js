@@ -12,3 +12,10 @@ export function preparePlayground(){
   
   return playground
 }
+
+export function getRandomColor(){
+  let hexColor = '#' + Math.round(Math.random() * 16777215).toString(16)
+  hexColor = (hexColor + '000000').substr(0, 7)
+
+  return hexColor
+}
